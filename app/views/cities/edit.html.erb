@@ -1,0 +1,53 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Modifier une ville</h5>
+            <span>Modification du profil des villes.</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "cities/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <!-- Widgets -->
+  <%= city_messages! %>
+  <%= form_for @city, method: :post, url: update_city_path, html: {class: 'form'} do |f| %>
+    <fieldset>
+      <!-- Create devoted widget -->
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Mettre à jour la ville nommée: <%= @city.name.empty? ? @city_name : @city.name %> - <%= @city.country.name %></h6></div>
+
+          <div class="formRow">
+            <label><%= f.label :country_id %></label>
+            <div class="formRight">
+              <%= f.collection_select :country_id, @countries, :id, :name, options ={prompt: "-Veuillez choisir un pays-"}, html_options = {class: "form-control"} %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :name %></label>
+            <div class="formRight">
+              <%= f.text_field :name, placeholder: "Veuillez entrer le nom de la ville", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <%= f.submit 'Valider', class: 'basic' %>
+          </div>
+      </div>
+      <!-- End Create devoted widget -->
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

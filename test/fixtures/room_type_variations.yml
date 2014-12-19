@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  room_type_id: 1
+  cancellable: false
+  cancellation_delay: 1
+  cancellation_details: MyText
+
+two:
+  room_type_id: 1
+  cancellable: false
+  cancellation_delay: 1
+  cancellation_details: MyText

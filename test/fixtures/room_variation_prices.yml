@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  room_type_id: 1
+  price: 1.5
+  room_type_variation_id: 1
+
+two:
+  room_type_id: 1
+  price: 1.5
+  room_type_variation_id: 1

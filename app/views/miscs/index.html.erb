@@ -1,0 +1,53 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>COMMODITES</h5>
+            <span>Gestions des actions liées aux commodités.</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "miscs/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <!-- Widgets -->
+  <%= misc_messages! %>
+  <%= form_for @misc, method: :post, url: create_misc_path, html: {class: 'form', multipart: true} do |f| %>
+    <fieldset>
+      <!-- Create devoted widget -->
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Créer une commodité et l'ajouter au système</h6></div>
+
+          <div class="formRow">
+            <label><%= f.label :icon %></label>
+            <div class="formRight">
+              <%= f.file_field :icon, class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :description %></label>
+            <div class="formRight">
+              <%= f.text_field :description, placeholder: "Veuillez entrer la description de la commodité", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <%= f.submit 'Valider', class: 'basic' %>
+          </div>
+      </div>
+      <!-- End Create devoted widget -->
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

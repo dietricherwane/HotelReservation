@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  bed_type_id: 1
+  description: MyText
+  number_of_persons: 1
+  available_rooms: 1
+  price: 1.5
+  cancellable: false
+  cancellation_delay: 1
+  cancellation_details: MyString
+
+two:
+  name: MyString
+  bed_type_id: 1
+  description: MyText
+  number_of_persons: 1
+  available_rooms: 1
+  price: 1.5
+  cancellable: false
+  cancellation_delay: 1
+  cancellation_details: MyString

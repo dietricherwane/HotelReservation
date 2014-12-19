@@ -1,0 +1,76 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>LISTE DES HOTELS</h5>
+            <span>Gestion des actions liées aux hôtels.</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "hotels/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <%= hotel_messages! %>
+<!-- Widgets -->
+  <div class="widget">
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des hôtels</h6></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display dTable taskWidget">
+      <thead>
+        <tr>
+          <th>Nom de l'hôtel</th>
+          <th>Numéro d'autorisation</th>
+          <th>Pays</th>
+          <th>Ville</th>
+          <th>Nombre d'étoiles</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless @hotels.blank? %>
+          <% @hotels.each do |hotel| %>
+            <% city = hotel.city %>
+            <tr class="gradeA">
+              <% css_class = (hotel.published == false ? 'taskD' : 'taskPr') %>
+              <td class = "<%= css_class %>">
+                <%= hotel.name %>
+              </td>
+              <td>
+                <%= hotel.authorization_number %>
+              </td>
+              <td>
+                <%= city.country.name %>
+              </td>
+              <td>
+                <%= city.name %>
+              </td>
+              <td>
+                <% hotel.stars.times do %>
+                  <%= image_tag('icons/color/star.png') %>
+                <% end %>
+              </td>
+              <td class = "actBtns">
+                <a href="<%= hotel_specification_path(hotel.id) %>" class="tipS" original-title="Spécifications"><%= image_tag('icons/color/bank.png', alt: '') %></a>
+                <a href="<%= edit_hotel_path(hotel.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
+                <% if hotel.published == false %>
+                  <a href="<%= enable_hotel_path(hotel.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
+                <% else %>
+                  <a href="<%= disable_hotel_path(hotel.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- End Main content wrapper -->

@@ -1,0 +1,56 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>MODIFIER UNE COMMODITE</h5>
+            <span>Modification des informations liées aux commodités.</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "miscs/shared/sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <!-- Widgets -->
+  <%= misc_messages! %>
+  <%= form_for @misc, method: :post, url: update_misc_path, html: {class: 'form', multipart: true} do |f| %>
+    <fieldset>
+      <!-- Create devoted widget -->
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Mettre à jour la commodité ayant pour description: <%= @misc.description.empty? ? @misc_description : @misc.description %></h6></div>
+
+          <div class = "formRow">
+            <%= image_tag @misc.icon.url(:icon) %>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :icon %></label>
+            <div class="formRight">
+              <%= f.file_field :icon, class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :description %></label>
+            <div class="formRight">
+              <%= f.text_field :description, placeholder: "Veuillez entrer la description de la commodité", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <%= f.submit 'Valider', class: 'basic' %>
+          </div>
+      </div>
+      <!-- End Create devoted widget -->
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

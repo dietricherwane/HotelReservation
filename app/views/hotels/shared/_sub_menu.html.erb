@@ -1,0 +1,14 @@
+<div class="statsRow">
+  <div class="wrapper">
+	<div class="controlB">
+  	<ul>
+  	  <li><a href="<%= hotel_path %>" title=""><img src="<%= asset_path 'icons/control/32/plus.png' %>" alt=""><span>Créer un hôtel</span></a></li>
+      <li><a href="<%= hotels_path %>" title=""><img src="<%= asset_path 'icons/control/32/order-149.png' %>" alt=""><span>Liste des hôtels</span></a></li>
+      <% unless (@hotel.new_record? rescue true) %>
+        <li><a href="<%= hotel_specification_path(@hotel.id) %>" title=""><img src="<%= asset_path 'icons/control/32/plus.png' %>" alt=""><span>Créer une spécification</span></a></li>
+      <% end %>
+      </ul>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

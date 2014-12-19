@@ -1,0 +1,2 @@
+class SubSpecificationsController < ApplicationController
+end

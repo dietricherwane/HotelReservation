@@ -1,0 +1,55 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>MODIFIER UNE SPECIFICATION - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</h5>
+            <span>Modification de la spécification nommée: <%= @specification.name %></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "hotels/shared/specification_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <!-- Widgets -->
+  <%= specification_messages! %>
+  <%= form_for @specification, method: :post, url: hotel_update_specification_path, html: {class: 'form', multipart: true} do |f| %>
+
+    <%= f.hidden_field :hotel_id, value: @hotel.id %>
+    <fieldset>
+      <!-- Create devoted widget -->
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Créer une spécification et l'ajouter au système</h6></div>
+
+          <div class="formRow">
+            <label><%= f.label :specification_type_id %></label>
+            <div class="formRight">
+              <%= f.collection_select :specification_type_id, @specification_types, :id, :name, options ={prompt: "-Le type de spécification-"}, html_options = {class: "form-control"} %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :name %></label>
+            <div class="formRight">
+              <%= f.text_field :name, placeholder: "Veuillez entrer la spécification", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <%= f.submit 'Valider', class: 'basic' %>
+          </div>
+      </div>
+      <!-- End Create devoted widget -->
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

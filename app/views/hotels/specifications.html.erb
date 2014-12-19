@@ -1,0 +1,61 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>LISTE DES SPECIFICATIONS - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</h5>
+            <span>Gestion des actions liées aux spécifications.</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "hotels/shared/specification_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+<!-- Widgets -->
+   <%= specification_messages! %>
+  <div class="widget">
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des spécifications</h6></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display dTable taskWidget">
+      <thead>
+        <tr>
+          <th>Catégorie de la spécification</th>
+          <th>Nom de la spécification</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless @specifications.blank? %>
+          <% @specifications.each do |specification| %>
+            <tr class="gradeA">
+              <% css_class = (specification.published == false ? 'taskD' : 'taskPr') %>
+              <td>
+                <%= specification.specification_type.name %>
+              </td>
+              <td class = "<%= css_class %>">
+                <%= specification.name %>
+              </td>
+
+              <td class = "actBtns">
+                <a href="<%= hotel_edit_specification_path(specification.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
+                <% if specification.published == false %>
+                  <a href="<%= hotel_enable_specification_path(specification.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
+                <% else %>
+                  <a href="<%= hotel_disable_specification_path(specification.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- End Main content wrapper -->
