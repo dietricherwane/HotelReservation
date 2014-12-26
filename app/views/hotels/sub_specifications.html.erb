@@ -1,0 +1,56 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>SOUS SPECIFICATIONS - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ] - Spécification: <%= link_to @specification.name, hotel_edit_specification_path(@specification.id) %></h5>
+            <span>Gestions des actions liées aux sous spécifications de l'hôtel: <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ] - Spécification: <%= link_to @specification.name, hotel_edit_specification_path(@specification.id) %></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "hotels/shared/sub_specification_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+<!-- Widgets -->
+   <%= sub_specification_messages! %>
+  <div class="widget">
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des sous spécificationsde la spécification: <%= link_to @specification.name, hotel_edit_specification_path(@specification.id) %></h6></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display dTable taskWidget">
+      <thead>
+        <tr>
+          <th>Nom de la sous spécification</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless @sub_specifications.blank? %>
+          <% @sub_specifications.each do |sub_specification| %>
+            <tr class="gradeA">
+              <% css_class = (sub_specification.published == false ? 'taskD' : 'taskPr') %>
+              <td class = "<%= css_class %>">
+                <%= sub_specification.description %>
+              </td>
+              <td class = "actBtns">
+                <a href="<%= hotel_edit_sub_specification_path(sub_specification.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
+                <% if sub_specification.published == false %>
+                  <a href="<%= hotel_enable_sub_specification_path(sub_specification.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
+                <% else %>
+                  <a href="<%= hotel_disable_sub_specification_path(sub_specification.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- End Main content wrapper -->

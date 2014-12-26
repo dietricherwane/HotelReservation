@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218171807) do
+ActiveRecord::Schema.define(version: 20141226165613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20141218171807) do
     t.integer  "additional_bed_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "published"
   end
 
   create_table "room_type_details", force: true do |t|
@@ -153,6 +154,8 @@ ActiveRecord::Schema.define(version: 20141218171807) do
     t.string   "cancellation_details"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "published"
+    t.integer  "hotel_id"
   end
 
   create_table "room_variation_prices", force: true do |t|

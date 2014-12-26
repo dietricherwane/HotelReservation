@@ -57,6 +57,7 @@
                 <% end %>
               </td>
               <td class = "actBtns">
+                <a href="<%= hotel_room_type_path(hotel.id) %>" class="tipS" original-title="Types de chambres"><%= image_tag('icons/color/sitemap.png', alt: '') %></a>
                 <a href="<%= hotel_specification_path(hotel.id) %>" class="tipS" original-title="Spécifications"><%= image_tag('icons/color/bank.png', alt: '') %></a>
                 <a href="<%= edit_hotel_path(hotel.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
                 <% if hotel.published == false %>

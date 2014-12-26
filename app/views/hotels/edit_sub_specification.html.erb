@@ -1,0 +1,48 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>SOUS SPECIFICATIONS - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ] - Spécification: <%= link_to @specification.name, hotel_edit_specification_path(@specification.id) %></h5>
+            <span>Editer la sous spécification nommée: <%= @sub_specification.description %> de l'hôtel: <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ] - Spécification: <%= link_to @specification.name, hotel_edit_specification_path(@specification.id) %></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "hotels/shared/sub_specification_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <!-- Widgets -->
+  <%= sub_specification_messages! %>
+  <%= form_for @sub_specification, method: :post, url: hotel_update_sub_specification_path, html: {class: 'form', multipart: true} do |f| %>
+
+
+    <fieldset>
+      <!-- Create devoted widget -->
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Editer la sous spécification: <%= @sub_specification.description %> de la spécification: <%= link_to @specification.name, hotel_edit_specification_path(@specification.id) %></h6></div>
+
+          <div class="formRow">
+            <label><%= f.label :description %></label>
+            <div class="formRight">
+              <%= f.text_field :description, placeholder: "Veuillez décrire la sous spécification", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <%= f.submit 'Valider', class: 'basic' %>
+          </div>
+      </div>
+      <!-- End Create devoted widget -->
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

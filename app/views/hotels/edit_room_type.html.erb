@@ -1,0 +1,107 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>MODIFIER UN TYPE DE CHAMBRE - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</h5>
+            <span>Modification du type de chambre nommé: <%= @room_type.name %></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "hotels/shared/room_type_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <!-- Widgets -->
+  <%= room_type_messages! %>
+  <%= form_for @room_type, method: :post, url: hotel_update_room_type_path, html: {class: 'form', multipart: true} do |f| %>
+
+        <%= f.hidden_field :hotel_id, value: @hotel.id %>
+    <fieldset>
+      <!-- Create devoted widget -->
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Créer un type de chambre et l'ajouter à l'hôtel: <%= @hotel.name %></h6></div>
+
+          <div class="formRow">
+            <label><%= f.label :name %></label>
+            <div class="formRight">
+              <%= f.text_field :name, placeholder: "Veuillez entrer le nom du type de chambre", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :description %></label>
+            <div class="formRight">
+              <%= f.text_area :description, placeholder: "Veuillez entrer la description du type de chambre", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :bed_type_id %></label>
+            <div class="formRight">
+              <%= f.collection_select :bed_type_id, @bed_types, :id, :name, options ={prompt: "-Le type de lit-"}, html_options = {class: "form-control"} %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :number_of_persons %></label>
+            <div class="formRight">
+              <%= f.text_field :number_of_persons, placeholder: "Veuillez entrer le nombre de personnes", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :available_rooms %></label>
+            <div class="formRight">
+              <%= f.text_field :available_rooms, placeholder: "Veuillez entrer le nombre de chambres disponibles", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :price %></label>
+            <div class="formRight">
+              <%= f.text_field :price, placeholder: "Veuillez entrer le nombre prix de la chambre", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :cancellable %></label>
+            <div class="formRight">
+              <%= f.radio_button :cancellable, true %>
+              <label for = "room_type_cancellable_true">Oui</label>
+              <%= f.radio_button :cancellable, false %>
+              <label for = "room_type_cancellable_false">Non</label>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :cancellation_delay %></label>
+            <div class="formRight">
+              <%= f.text_field :cancellation_delay, placeholder: "Veuillez entrer le délai d'annulation", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <label><%= f.label :cancellation_details %></label>
+            <div class="formRight">
+              <%= f.text_area :cancellation_details, placeholder: "Veuillez entrer les détails d'annulation", class: 'form-control' %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="formRow">
+            <%= f.submit 'Valider', class: 'basic' %>
+          </div>
+      </div>
+      <!-- End Create devoted widget -->
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

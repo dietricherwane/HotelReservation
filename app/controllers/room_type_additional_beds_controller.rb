@@ -1,0 +1,2 @@
+class RoomTypeAdditionalBedsController < ApplicationController
+end

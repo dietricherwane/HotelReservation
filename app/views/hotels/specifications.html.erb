@@ -19,7 +19,7 @@
 <!-- Main content wrapper -->
 <div class="wrapper">
 <!-- Widgets -->
-   <%= specification_messages! %>
+  <%= specification_messages! %>
   <div class="widget">
     <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des spécifications</h6></div>
     <table cellpadding="0" cellspacing="0" border="0" class="display dTable taskWidget">
@@ -27,6 +27,7 @@
         <tr>
           <th>Catégorie de la spécification</th>
           <th>Nom de la spécification</th>
+          <th>Nombre de sous spécifications</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -41,8 +42,11 @@
               <td class = "<%= css_class %>">
                 <%= specification.name %>
               </td>
-
+              <td>
+                <%= specification.sub_specifications.count %>
+              </td>
               <td class = "actBtns">
+                <a href="<%= hotel_sub_specification_path(specification.id) %>" class="tipS" original-title="Sous spécifications"><%= image_tag('icons/color/bank.png', alt: '') %></a>
                 <a href="<%= hotel_edit_specification_path(specification.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
                 <% if specification.published == false %>
                   <a href="<%= hotel_enable_specification_path(specification.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>

@@ -1,5 +1,5 @@
 class SpecificationType < ActiveRecord::Base
-  # Types de lits supplémentaires
+  # Liste des spécifications
 
   # Accessible fields
   attr_accessible :name, :user_id, :published

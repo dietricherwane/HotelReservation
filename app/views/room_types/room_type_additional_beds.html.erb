@@ -1,0 +1,56 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>LISTE DES TYPES DE LITS SUPPLEMENTAIRES DE LA CHAMBRE: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %> - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</h5>
+            <span>Gestions des actions liées aux types de lits supplémentaires de la chambre: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %> - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "room_types/shared/room_type_additional_bed_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+<!-- Widgets -->
+  <%= room_type_additional_bed_messages! %>
+  <div class="widget">
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des types de lits additionnels de la chambre: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %></h6></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display dTable taskWidget">
+      <thead>
+        <tr>
+          <th>Nom du type de lit additionnel</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless @room_type_additional_beds.blank? %>
+          <% @room_type_additional_beds.each do |room_type_additional_bed| %>
+            <tr class="gradeA">
+              <% css_class = (room_type_additional_bed.published == false ? 'taskD' : 'taskPr') %>
+              <td class = "<%= css_class %>">
+                <%= room_type_additional_bed.additional_bed_type.name %>
+              </td>
+              <td class = "actBtns">
+                <!--<a href="<%#= room_type_edit_room_type_additional_bed_path(room_type_additional_bed.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>-->
+                <% if room_type_additional_bed.published == false %>
+                  <a href="<%= room_type_enable_room_type_additional_bed_path(room_type_additional_bed.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
+                <% else %>
+                  <a href="<%= room_type_disable_room_type_additional_bed_path(room_type_additional_bed.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- End Main content wrapper -->
