@@ -27,6 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
         expire_session_data_after_sign_in!
+        flash[:notice] = "Un email de confirmation vient de vous être envoyé. Vous devrez l'utiliser pour activer votre compte."
         #flash[:notice] = "Le compte de l'utilisateur a été créé. Il va recevoir un email contenant un lien sur lequel il devra cliquer pour activer son compte."
         redirect_to root_path
         #respond_with resource, :location => after_inactive_sign_up_path_for(resource)
