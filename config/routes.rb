@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
 
-  root 'hotels#index'
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords',
+    confirmations: 'users/confirmations'
+  }
+
+  root 'home#index'
+
+  get "contacts" => "home#contacts", as: :contacts
 
   get 'countries' => 'countries#show', as: :show_countries
   get 'country/disable/:id' => 'countries#disable', as: :disable_country
@@ -57,7 +66,7 @@ Rails.application.routes.draw do
   get 'misc/disable/:id' => 'miscs#disable', as: :disable_misc
   get 'misc/enable/:id' => 'miscs#enable', as: :enable_misc
 
-  get 'hotel' => 'hotels#index', as: :hotel
+  get 'administrator' => 'hotels#index', as: :hotel
   post 'hotel/create' => 'hotels#create', as: :create_hotel
   get 'hotel/create' => 'hotels#index'
   get 'hotels' => 'hotels#show', as: :hotels
@@ -104,6 +113,29 @@ Rails.application.routes.draw do
   get 'room_type/room_type_additional_bed/update/:room_type_additional_bed_id' => 'room_types#edit_room_type_additional_bed'
   get 'room_type/room_type_additional_bed/enable/:room_type_additional_bed_id' => 'room_types#enable_room_type_additional_bed', as: :room_type_enable_room_type_additional_bed
   get 'room_type/room_type_additional_bed/disable/:room_type_additional_bed_id' => 'room_types#disable_room_type_additional_bed', as: :room_type_disable_room_type_additional_bed
+
+  get 'room_type/:room_type_id/room_type_variation' => 'room_types#room_type_variation', as: :room_type_room_type_variation
+  post 'room_type/:room_type_id/room_type_variation/create' => 'room_types#create_room_type_variation', as: :room_type_create_room_type_variation
+  get 'room_type/:room_type_id/room_type_variation/create' => 'room_types#room_type_variation'
+  get 'room_type/:room_type_id/room_type_variations' => 'room_types#room_type_variations', as: :room_type_room_type_variations
+  get 'room_type/room_type_variation/edit/:room_type_variation_id' => 'room_types#edit_room_type_variation', as: :room_type_edit_room_type_variation
+  post 'room_type/room_type_variation/update/:room_type_variation_id' => 'room_types#update_room_type_variation', as: :room_type_update_room_type_variation
+  get 'room_type/room_type_variation/update/:room_type_variation_id' => 'room_types#edit_room_type_variation'
+  get 'room_type/room_type_variation/enable/:room_type_variation_id' => 'room_types#enable_room_type_variation', as: :room_type_enable_room_type_variation
+  get 'room_type/room_type_variation/disable/:room_type_variation_id' => 'room_types#disable_room_type_variation', as: :room_type_disable_room_type_variation
+
+  get "room_type_variation/:room_type_variation_id/misc" => "room_type_variations#misc", as: :room_type_variation_misc
+  post "room_type_variation/:room_type_variation_id/misc/create" => "room_type_variations#create_misc", as: :create_room_type_variation_misc
+  get "room_type_variation/:room_type_variation_id/miscs" => "room_type_variations#miscs", as: :room_type_variation_miscs
+  get "room_type_variation/misc/:room_type_variation_misc_id/enable" => "room_type_variations#enable_misc", as: :enable_room_type_variation_misc
+  get "room_type_variation/misc/:room_type_variation_misc_id/disable" => "room_type_variations#disable_misc", as: :disable_room_type_variation_misc
+
+  ######## Users ########
+
+  post "hotels/search" => "hotels#search", as: :search_hotel
+  get "hotels/search" => "home#index"
+  get "hotel/:hotel_id/rooms" => "hotels#room_details", as: :hotel_room_details
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

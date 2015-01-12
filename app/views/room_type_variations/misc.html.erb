@@ -1,0 +1,58 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>Ajouter une commodité: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %> - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</h5>
+            <span>Gestions des commodités de la variante de chambres: <b><%= @room_type_variation.cancellable ? "Annulation gratuite" : "Non remboursable" %> |
+            <% if @room_type_variation.cancellable %>
+              <%= @room_type_variation.cancellation_delay %> Jour(s)
+            <% end %>
+            | <%= @room_type_variation.cancellation_details.to_s[0..10] %> | <%= @room_type_variation.price %></b>
+            </span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "room_type_variations/shared/room_type_variation_miscs_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+  <!-- Widgets -->
+  <%= room_type_variation_misc_messages! %>
+  <%= form_for @room_type_variation_misc, method: :post, url: create_room_type_variation_misc_path, html: {class: 'form'} do |f| %>
+
+    <%= f.hidden_field :room_type_variation_id, value: @room_type_variation.id %>
+    <fieldset>
+      <!-- Create room ype variation widget -->
+      <div class="widget">
+        <div class="title"><img src="<%= asset_path 'icons/dark/users.png' %>" alt="" class="titleIcon" /><h6>Ajouter une commodité à la variante: <%= @room_type_variation.cancellable ? "Annulation gratuite" : "Non remboursable" %> |
+            <% if @room_type_variation.cancellable %>
+              <%= @room_type_variation.cancellation_delay %> Jour(s)
+            <% end %>
+            | <%= @room_type_variation.cancellation_details.to_s[0..10] %> | <%= @room_type_variation.price %></h6></div>
+
+          <div class="formRow">
+            <label><%= f.label :misc_id %></label>
+            <div class="formRight">
+              <%= f.collection_select :misc_id, @miscs, :id, :description, options = {prompt: "-Veuillez choisir une commodité-"}, html_options = {class: "form-control"} %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <%= f.submit 'Valider', class: 'basic' %>
+          </div>
+      </div>
+      <!-- End Create devoted widget -->
+    </fieldset>
+  <% end %>
+
+
+</div>
+<!-- End Main content wrapper -->

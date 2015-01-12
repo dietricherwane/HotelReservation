@@ -9,6 +9,7 @@ class RoomType < ActiveRecord::Base
   belongs_to :bed_type
   has_many :room_type_additional_beds
   has_many :additional_bed_types, through: :room_type_additional_beds
+  has_many :room_type_variations
 
   # Scopes
   default_scope {order("name ASC")}
@@ -34,7 +35,7 @@ class RoomType < ActiveRecord::Base
 
   # Validations
   validates :name, :bed_type_id, :hotel_id, :number_of_persons, :available_rooms, :price, presence: true
-  #validates :cancellation_delay, :cancellation_details, presence: true, if: "cancellable == true"
+  validates :cancellation_delay, :cancellation_details, presence: true, if: "cancellable == true"
   validates :name, length: {in: 2..100}
   validates :description, :cancellation_details, length: {minimum: 10, allow_blank: true}
   validates :number_of_persons, :available_rooms, :cancellation_delay, :price, numericality: {greater_than: 0, only_integer: true, allow_blank: true}

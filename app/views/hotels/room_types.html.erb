@@ -58,13 +58,16 @@
                 <%= room_type.cancellable == false ? "Non" : "Oui" %>
               </td>
               <td class = "actBtns">
-                <a href="<%= room_type_room_type_additional_bed_path(room_type.id) %>" class="tipS" original-title="Lit additionnel"><%= image_tag('icons/color/plus.png', alt: '') %></a>
-                <a href="<%= hotel_edit_room_type_path(room_type.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
-                <% if room_type.published == false %>
-                  <a href="<%= hotel_enable_room_type_path(room_type.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
-                <% else %>
-                  <a href="<%= hotel_disable_room_type_path(room_type.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
-                <% end %>
+
+                  <a href="<%= room_type_room_type_additional_bed_path(room_type.id) %>" class="tipS" original-title="Lit additionnel"><%= image_tag('icons/color/plus.png', alt: '') %></a>
+                  <a href="<%= room_type_room_type_variation_path(room_type.id) %>" class="tipS" original-title="Variante"><%= image_tag('icons/color/category.png', alt: '') %></a>
+                  <a href="<%= hotel_edit_room_type_path(room_type.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
+                  <% if room_type.published == false %>
+                    <a href="<%= hotel_enable_room_type_path(room_type.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
+                  <% else %>
+                    <a href="<%= hotel_disable_room_type_path(room_type.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
+                  <% end %>
+
               </td>
             </tr>
           <% end %>

@@ -20,7 +20,7 @@
 <div class="wrapper">
   <!-- Widgets -->
   <%= room_type_additional_bed_messages! %>
-  <%= form_for @room_type_additional_bed, method: :post, url: room_type_create_room_type_additional_bed_path, html: {class: 'form', multipart: true} do |f| %>
+  <%= form_for @room_type_additional_bed, method: :post, url: room_type_create_room_type_additional_bed_path, html: {class: 'form'} do |f| %>
 
     <%= f.hidden_field :room_type_id, value: @room_type.id %>
     <fieldset>

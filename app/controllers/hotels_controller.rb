@@ -1,6 +1,16 @@
 class HotelsController < ApplicationController
 
-  layout 'administrator'
+  before_filter :search_session_exists, only: [:room_details]
+
+  layout :select_layout
+
+  def select_layout
+    if ["search", "room_details"].include?(action_name)
+      return "user"
+    else
+      return "administrator"
+    end
+  end
 
   def index
     @hotel = Hotel.new
@@ -406,4 +416,110 @@ class HotelsController < ApplicationController
     @bed_types = BedType.where(published: [nil, true])
   end
   ################################ Room type
+
+  def search
+    if check_search_session_variables(params)
+      set_search_session_variables(params)
+
+      terms = session[:search_hotel_terms].strip.split
+
+      cities_sql = search_cities_sql(terms)
+
+      hotel_sql = ""
+      @hotels = []
+
+      terms.each do |term|
+        hotel_sql << "(name ILIKE '%#{term}%' OR address ILIKE '%#{term}%') AND "
+      end
+      hotel_sql = "(#{hotel_sql[0..-5]})"
+
+      unfiltered_hotels = Hotel.where("#{cities_sql} #{hotel_sql} AND published IS NOT FALSE")
+
+      if unfiltered_hotels.blank?
+        @hotels = nil
+      else
+        unfiltered_hotels.each do |unfiltered_hotel|
+          available_rooms = unfiltered_hotel.room_types.where("number_of_persons = #{session[:search_hotel_adult]} AND available_rooms > 0 AND published IS NOT FALSE")
+          unless available_rooms.blank?
+            @hotels << unfiltered_hotel
+          end
+        end
+      end
+      @hotels_count = @hotels.count rescue 0
+
+      if @hotels.blank?
+        flash.now[:notice] = "Aucun résultat n'a été trouvé. Veuillez effectuer une autre recherche."
+      else
+        flash.now[:success] = "#{@hotels_count} hôtel#{@hotels_count > 1 ? "s ont été trouvés" : " a été trouvé"}."
+      end
+
+      @duke = params.inspect
+    else
+      flash[:notice] = "Veuillez entrer une destination, un nom d'hôtel ou un lieu d'intérêt, choisir le nombre de pensionnaires et indiquer la date."
+      redirect_to root_path
+    end
+  end
+
+  # Check if some terms exist in cities
+  def search_cities_sql(terms)
+    cities_id = ""
+    cities_sql = ""
+    terms.each do |term|
+      cities_sql << "name ILIKE '%#{term}%' OR "
+    end
+    cities = City.where("#{cities_sql[0..-4]} AND published IS NOT FALSE")
+
+    # Save cities ids
+    unless cities.empty?
+      cities.each do |city|
+        cities_id << "#{city.id},"
+      end
+    end
+
+    # Remove the coma in the end
+    cities_id = cities_id.chop
+
+    unless cities_id.blank?
+      cities_sql = "city_id IN (#{cities_id}) AND "
+    end
+
+    return cities_sql
+  end
+
+  def set_search_session_variables(params)
+    session[:search_hotel_terms] = params[:terms]
+    session[:search_hotel_begin_date] = params[:begin_date]
+    session[:search_hotel_end_date] = params[:end_date]
+    session[:search_hotel_adult] = params[:post][:adults]
+    session[:search_hotel_children] = params[:post][:children]
+    session[:search_number_of_nights] = (Date.parse(session[:search_hotel_end_date]) - Date.parse(session[:search_hotel_begin_date])).to_i
+  end
+
+  # Returns true if terms and adult number exists
+  def check_search_session_variables(params)
+    if !params[:terms].blank? && (!params[:post][:adults].blank? rescue false) && !params[:begin_date].blank? && (Date.parse(params[:begin_date])) >= Date.today
+      return true
+    else
+      return false
+    end
+  end
+
+  def room_details
+    @hotel = Hotel.find_by_id(params[:hotel_id])
+
+    if @hotel.blank?
+      render :file => "#{Rails.root}/public/user/404.html", :status => 404, :layout => false
+    else
+      @city = @hotel.city
+      @country = @city.country
+      @room_types = @hotel.room_types.where("number_of_persons = #{session[:search_hotel_adult]} AND available_rooms > 0").order("price ASC")
+    end
+  end
+
+  def search_session_exists
+    if session[:search_hotel_terms].blank?
+      redirect_to root_path
+    end
+  end
+
 end

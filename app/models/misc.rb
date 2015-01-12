@@ -1,4 +1,8 @@
 class Misc < ActiveRecord::Base
+  # Relationships
+  has_many :room_type_variation_miscs
+  has_many :room_type_variations, through: :room_type_variation_miscs
+
   # Commodités
 
   # Accessible fields

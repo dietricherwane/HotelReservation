@@ -1,0 +1,58 @@
+<div class="clearfix"></div>
+
+<div class="page_title2">
+<div class="container">
+
+  <div class="title"><h1>Formulaire de connexion</h1></div>
+</div>
+</div><!-- end page title -->
+
+<div class="clearfix"></div>
+
+<div class="container">
+  <%= devise_error_messages! %>
+	<div class="content_fullwidth lessmar">
+
+    <div class="login_form">
+      <%= form_for(resource, as: resource_name, url: user_session_path(resource_name), html: {class: "sky-form"}) do |f| %>
+        <header>Connexion</header>
+        <fieldset>
+					<section>
+						<div class="row">
+              <%= f.label :email, class: "label col col-4" %>
+              <div class="col col-8">
+								<label class="input">
+									<i class="icon-append icon-user"></i>
+									<%= f.text_field :email %>
+								</label>
+							</div>
+            </div>
+          </section>
+
+          <section>
+						<div class="row">
+							<%= f.label :password, class: "label col col-4" %>
+							<div class="col col-8">
+								<label class="input">
+									<i class="icon-append icon-lock"></i>
+									<%= f.password_field :password %>
+								</label>
+							</div>
+						</div>
+					</section>
+        </fieldset>
+
+				<footer>
+          <button type="submit" class="button">Se connecter     </button>
+				</footer>
+
+      <% end %>
+
+      <%= render "users/shared/links" %>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="clearfix"></div>

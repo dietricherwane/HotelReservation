@@ -1,0 +1,69 @@
+<div class="clearfix"></div>
+
+<div class="page_title2">
+  <div class="container">
+
+    <div class="title"><h1>Résultats de la recherche (<%= @hotels_count%>)</h1></div>
+
+    <%= render "hotels/search/search_terms" %>
+
+  </div>
+</div> <!-- End div Page title -->
+<div id = "search_form_section">
+  <%= render "home/search_hotel_form" %>
+</div>
+
+<% unless @hotels.blank? %>
+  <div class = "content_fullwidth lessmar">
+    <% @hotels.each do |hotel| %>
+      <div class="framed-box">
+			  <div class="framed-box-wrap">
+				  <div class="pricing-title">
+				  <% city = hotel.city %>
+				  <h4 class="nocaps"><%= hotel.name %> - <%= city.name %></h4>
+				  </div>
+				  <div class = "one_half">
+				    <div class="pricing-text-list">
+              <ul class="list1">
+                <li><i class="fa fa-home"></i> <%= hotel.address %></li>
+                <li><i class="fa fa-map-marker"></i> <%= "#{city.name} - #{city.country.name}" %></li>
+                <li><i class="fa fa-phone"></i> <%= hotel.phone_number %></li>
+                <li><i class="fa fa-mobile-phone"></i> <%= hotel.mobile_number %></li>
+                <li>
+                  <% hotel.stars.times do %>
+                    <i class="fa fa-star"></i>
+                  <% end %>
+                </li>
+                <li>
+                  <i class="fa fa-moon-o"></i>
+                  Prix pour <%= session[:search_number_of_nights] %> nuit<%= session[:search_number_of_nights] > 1 ? "s" : "" %>
+                </li>
+                <li><i class="fa fa-money"></i>
+                  <span class = "highlight blue">
+                  <% room_types = hotel.room_types.where("number_of_persons = #{session[:search_hotel_adult]} AND available_rooms > 0") %>
+                    <b><%= room_types.order("price ASC").first.price * session[:search_number_of_nights] %> CFA</b>
+                  </span>
+                </li>
+                <li>
+                  <li><i class="fa fa-leaf"></i>
+                  <span class = "highlight gray">
+                    <% number_of_rooms = room_types.sum(:available_rooms) %>
+                    Il nous reste <%= number_of_rooms %> chambre<%= number_of_rooms > 0 ? "s" : "" %>
+                  </span>
+                </li>
+              </ul>
+					    <br>
+              <a href="<%= hotel_room_details_path(hotel.id) %>" class="but_file"><i class="fa fa-plus"></i> Sélectionnez</a>
+				    </div>
+          </div>
+
+			    <div class = "one_half last">
+			      <div class = "box">
+			        <%= image_tag hotel.front.url(:medium) %>
+			      </div>
+			    </div>
+			  </div>
+		  </div>
+    <% end %>
+  </div>
+<% end %>

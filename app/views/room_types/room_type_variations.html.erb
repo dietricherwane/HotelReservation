@@ -1,0 +1,71 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>LISTE DES VARIANTES DE LA CHAMBRE: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %> - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</h5>
+            <span>Gestions des actions liées aux variantes de la chambre: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %> - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "room_types/shared/room_type_variation_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+<!-- Widgets -->
+  <%= room_type_variation_messages! %>
+  <div class="widget">
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des variantes de la chambre: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %></h6></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display dTable taskWidget">
+      <thead>
+        <tr>
+          <th>Statut de l'annulation</th>
+          <th>Délais d'annulation</th>
+          <th>Modalités d'annulation</th>
+          <th>Prix</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless @room_type_variations.blank? %>
+          <% @room_type_variations.each do |room_type_variation| %>
+            <tr class="gradeA">
+              <% css_class = (room_type_variation.published == false ? 'taskD' : 'taskPr') %>
+              <td class = "<%= css_class %>">
+                <%= room_type_variation.cancellable ? "Annulation gratuite" : "Non remboursable" %>
+              </td>
+              <td>
+                <% if room_type_variation.cancellable %>
+                  <%= room_type_variation.cancellation_delay %> Jour(s)
+                <% end %>
+              </td>
+              <td>
+                <%= room_type_variation.cancellation_details.to_s[0..10] %>
+              </td>
+              <td>
+                <%= room_type_variation.price %>
+              </td>
+              <td class = "actBtns">
+                <a href="<%= room_type_variation_misc_path(room_type_variation.id) %>" class="tipS" original-title="Commodités"><%= image_tag('icons/color/store.png', alt: '') %></a>
+                <a href="<%= room_type_edit_room_type_variation_path(room_type_variation.id) %>" class="tipS" original-title="Modifier"><%= image_tag('icons/edit.png', alt: '') %></a>
+                <% if room_type_variation.published == false %>
+                  <a href="<%= room_type_enable_room_type_variation_path(room_type_variation.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
+                <% else %>
+                  <a href="<%= room_type_disable_room_type_variation_path(room_type_variation.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- End Main content wrapper -->

@@ -1,0 +1,2 @@
+class RoomTypeVariationMiscsController < ApplicationController
+end

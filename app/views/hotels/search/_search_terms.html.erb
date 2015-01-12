@@ -1,0 +1,13 @@
+<a id = "toggle_search_form" style = "cursor: pointer;">
+1 chambre <%= session[:search_hotel_adult] %> adulte<%= session[:search_hotel_adult].to_i > 1 ? "s" : "" %>
+
+<% if session[:search_hotel_children].to_i > 0 %>
+  <%= session[:search_hotel_children] %> enfant<%= session[:search_hotel_children].to_i > 1 ? "s" : "" %>
+<% end %>
+
+<% unless session[:search_hotel_begin_date].blank? %>
+  Du <%= session[:search_hotel_begin_date] %> au <%= session[:search_hotel_end_date] %>
+<% end %>
+ Terme(s): <b><%= session[:search_hotel_terms] %></b>
+
+</a>

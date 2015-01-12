@@ -1,0 +1,140 @@
+<div class="clearfix"></div>
+
+<div class="page_title">
+<div class="container">
+
+    <h1><%= @hotel.name %></h1>
+    <%= "<i class='fa fa-home'></i> #{@hotel.address} <b>-</b> <i class='fa fa-phone'></i> #{@hotel.phone_number} <b>|</b> #{@city.name} <b>|</b> #{@country.name}  ".html_safe %>
+
+</div>
+</div><!-- end page title -->
+
+<div class="clearfix"></div>
+
+<div class="one_full">
+	<iframe class="google-map2" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;aq=2&amp;oq=was&amp;sll=<%= @hotel.latitude %>,<%= @hotel.longitude %>&amp;sspn=0.765069,1.674042&amp;ie=UTF8&amp;hq=&amp;t=m&amp;z=17&amp;ll=<%= @hotel.latitude %>,<%= @hotel.longitude %>&amp;output=embed"></iframe>
+</div>
+
+<div class="clearfix divider_dashed4"></div>
+
+<div class = "one_full">
+  <div class = "table-style"><!-- Begin room types table -->
+    <table class = "table-list">
+      <tbody>
+        <tr>
+          <th>
+            Type de chambre
+          </th>
+          <th>
+            Nombre de personnes
+          </th>
+          <th>
+            Commodités
+          </th>
+          <th>
+            Prix taxes et frais compris
+          </th>
+        </tr>
+        <% @room_types.each do |room_type| %>
+          <tr>
+            <td>
+              <div style = "text-align:left;">
+                <p><b><%= room_type.name %></b></p>
+                <p><i class="fa fa-phone"></i> <%= @hotel.phone_number %></p>
+                <p><b>Type de lit: </b><%= room_type.bed_type.name %></p>
+                <% additionnal_beds = room_type.additional_bed_types %>
+                <% unless additionnal_beds.blank? %>
+                  <p><b>Lit supplémentaire: </b>
+                  <ul>
+                    <% additionnal_beds.each do |additionnal_bed| %>
+                      <li><%= additionnal_bed.name %></li>
+                    <% end %>
+                  </ul>
+                  </p>
+                <% end %>
+                <p style = "text-align:justify;"><b>Détails: </b><%= room_type.description %></p>
+              </div>
+            </td>
+            <td>
+              <% room_type.number_of_persons.times do %>
+                <i class="fa fa-user"></i>
+              <% end %>
+            </td>
+            <td style = "text-align:left;">
+              <%= room_type.cancellable == false ? "<span class='highlight red'>Annulation impossible</span>".html_safe : "<span class='highlight green'>Annulation possible</span>".html_safe %>
+            </td>
+            <td>
+              <ul>
+                <li>
+                  <span class = "highlight blue">
+                    <b><%= room_type.price * session[:search_number_of_nights] %> CFA</b>
+                  </span>
+                </li>
+                <li>
+                  <i class="fa fa-moon-o"></i>
+                  Prix pour <%= session[:search_number_of_nights] %> nuit<%= session[:search_number_of_nights] > 1 ? "s" : "" %>
+                </li>
+              </ul>
+              <a href="#" class="but_thumbs_up"><i class="fa fa-thumbs-up fa-lg"></i> Réservez</a>
+            </td>
+          </tr>
+          <% room_type_variations = room_type.room_type_variations.where("published IS NOT FALSE") %>
+          <% unless room_type_variations.blank? %>
+            <% room_type_variations.each do |room_type_variation| %>
+              <tr>
+                <td>
+                  <div style = "text-align:left;">
+                    <p><b><%= room_type.name %></b></p>
+                    <p><i class="fa fa-phone"></i> <%= @hotel.phone_number %></p>
+                    <p><b>Type de lit: </b><%= room_type.bed_type.name %></p>
+                    <% additionnal_beds = room_type.additional_bed_types %>
+                    <% unless additionnal_beds.blank? %>
+                      <p><b>Lit supplémentaire: </b>
+                      <ul>
+                        <% additionnal_beds.each do |additionnal_bed| %>
+                          <li><%= additionnal_bed.name %></li>
+                        <% end %>
+                      </ul>
+                      </p>
+                    <% end %>
+                    <p style = "text-align:justify;"><b>Détails: </b><%= room_type.description %></p>
+                  </div>
+                </td>
+                <td>
+                  <% room_type.number_of_persons.times do %>
+                    <i class="fa fa-user"></i>
+                  <% end %>
+                </td>
+                <td style = "text-align:left;">
+                  <%= room_type_variation.cancellable == false ? "<span class='highlight red'>Annulation impossible</span>".html_safe : "<span class='highlight green'>Annulation possible</span>".html_safe %>
+                  <% miscs = room_type_variation.miscs %>
+                  <% unless miscs.blank? %>
+                    <ul style = "margin-top: 15px;">
+                    <% miscs.each do |misc| %>
+                      <li><%= image_tag misc.icon.url(:icon) %> <%= misc.description %> </li>
+                    <% end %>
+                    </ul>
+                  <% end %>
+                </td>
+                <td>
+                  <ul>
+                    <li>
+                      <span class = "highlight blue">
+                        <b><%= room_type_variation.price * session[:search_number_of_nights] %> CFA</b>
+                      </span>
+                    </li>
+                    <li>
+                      <i class="fa fa-moon-o"></i>
+                      Prix pour <%= session[:search_number_of_nights] %> nuit<%= session[:search_number_of_nights] > 1 ? "s" : "" %>
+                    </li>
+                  </ul>
+                  <a href="#" class="but_thumbs_up"><i class="fa fa-thumbs-up fa-lg"></i> Réservez</a>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div><!-- End room types table -->
+</div>

@@ -1,0 +1,3 @@
+<% if (controller_name == "home" && action_name == "index") || (controller_name == "hotels" && action_name == "search") %>
+  <%= javascript_include_tag "home/index"  if Rails.application.assets.find_asset("home/index.js") %>
+<% end %>

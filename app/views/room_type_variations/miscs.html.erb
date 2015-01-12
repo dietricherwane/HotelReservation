@@ -1,0 +1,67 @@
+<!-- Title area -->
+<div class="titleArea">
+    <div class="wrapper">
+        <div class="pageTitle">
+            <h5>LISTE DES COMMODITES DE LA VARIANTE DE CHAMBRE: <%= link_to @room_type.name, hotel_edit_room_type_path(@room_type.id) %> - <%= link_to @hotel.name, edit_hotel_path(@hotel.id) %> [ <%= @city.country.name %> - <%= @city.name %> ]</h5>
+            <span>Gestions des actions liées aux commodités de la variante: <b><%= @room_type_variation.cancellable ? "Annulation gratuite" : "Non remboursable" %> |
+            <% if @room_type_variation.cancellable %>
+              <%= @room_type_variation.cancellation_delay %> Jour(s)
+            <% end %>
+            | <%= @room_type_variation.cancellation_details.to_s[0..10] %> | <%= @room_type_variation.price %></b></span>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="line"></div>
+
+<%= render "room_type_variations/shared/room_type_variation_miscs_sub_menu" %>
+
+<div class="line"></div>
+
+<!-- Main content wrapper -->
+<div class="wrapper">
+<!-- Widgets -->
+  <%= room_type_variation_misc_messages! %>
+  <div class="widget">
+    <div class="title"><img src="<%= asset_path 'icons/dark/full2.png' %>" alt="" class="titleIcon" /><h6>Liste des commodités de la variante de chambre: <%= @room_type_variation.cancellable ? "Annulation gratuite" : "Non remboursable" %> |
+            <% if @room_type_variation.cancellable %>
+              <%= @room_type_variation.cancellation_delay %> Jour(s)
+            <% end %>
+            | <%= @room_type_variation.cancellation_details.to_s[0..10] %> | <%= @room_type_variation.price %></h6></div>
+    <table cellpadding="0" cellspacing="0" border="0" class="display dTable taskWidget">
+      <thead>
+        <tr>
+          <th>Description de la commodité</th>
+          <th>Icône descriptive</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless @room_type_variation_miscs.blank? %>
+          <% @room_type_variation_miscs.each do |room_type_variation_misc| %>
+            <tr class="gradeA">
+              <% css_class = (room_type_variation_misc.published == false ? 'taskD' : 'taskPr') %>
+              <td class = "<%= css_class %>">
+                <%= room_type_variation_misc.misc.description %>
+              </td>
+              <td>
+                <%= image_tag room_type_variation_misc.misc.icon.url(:icon) %>
+              </td>
+              <td class = "actBtns">
+                <% if room_type_variation_misc.published == false %>
+                  <a href="<%= enable_room_type_variation_misc_path(room_type_variation_misc.id) %>" class="tipS" original-title="Activer"><%= image_tag('icons/updateDone.png', alt: '') %></a>
+                <% else %>
+                  <a href="<%= disable_room_type_variation_misc_path(room_type_variation_misc.id) %>" class="tipS" original-title="Désactiver"><%= image_tag('icons/remove.png', alt: '') %></a>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<!-- End Main content wrapper -->
